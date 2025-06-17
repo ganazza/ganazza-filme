@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ganazza Flix - Netflix Inspired Brown & Green</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <style>
+    /* Reset and base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #3E2F1C; /* deep coffee brown */
+      color: #D6E6C3; /* light greenish */
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      user-select: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Scrollbar styling for horizontal scroll */
+    ::-webkit-scrollbar {
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #2E2415;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #78995A;
+      border-radius: 4px;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: linear-gradient(90deg, #5A4224 0%, #50864F 100%);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 3rem;
+    }
+    .logo {
+      font-weight: 900;
+      font-size: 2rem;
+      color: #D6E6C3;
+      font-style: italic;
+      letter-spacing: 0.12em;
+      text-shadow: 1px 1px 6px #3D4B22;
+      cursor: default;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .header-controls input[type="search"] {
+      border: none;
+      border-radius: 24px;
+      padding: 0.5rem 1.5rem;
+      width: 260px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #3E2F1C;
+      outline: none;
+      transition: box-shadow 0.3s ease;
+      background: #9BA882;
+      box-shadow: inset 0 2px 5px rgb(0 0 0 / 0.15);
+      font-family: 'Poppins', sans-serif;
+    }
+    .header-controls input[type="search"]::placeholder {
+      color: #6F7E5E;
+      font-style: italic;
+    }
+    .header-controls input[type="search"]:focus {
+      box-shadow: 0 0 12px #A6C48A;
+      background: #E6F1D3;
+      color: #3E2F1C;
+    }
+
+    .icon-button {
+      background: transparent;
+      border: none;
+      color: #D6E6C3;
+      cursor: pointer;
+      font-size: 2.4rem;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+    .icon-button:hover,
+    .icon-button:focus {
+      color: #A6C48A;
+      outline: none;
+    }
+    .icon-button[data-badge]:after {
+      content: attr(data-badge);
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: #528137;
+      color: #F0F8D3;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 9999px;
+      line-height: 1;
+      user-select: none;
+      box-shadow: 0 0 5px #39611E;
+    }
+
+    /* Main container for content below header */
+    main {
+      margin-top: 20px;
+      padding: 0 3rem 3rem;
+      flex: 1;
+    }
+
+    /* Featured hero */
+    .featured-hero {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow:
+        0 0 30px 10px rgba(166, 196, 138, 0.6),
+        0 15px 45px rgb(0 0 0 / 0.85);
+      background: #3E2F1C;
+      display: flex;
+      align-items: flex-end;
+      height: 480px;
+      margin-bottom: 48px;
+      user-select: none;
+      color: #D6E6C3;
+    }
+    .featured-hero > img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.45);
+      z-index: 1;
+      user-select: none;
+      pointer-events: none;
+    }
+    .featured-info {
+      position: relative;
+      z-index: 2;
+      padding: 40px 60px;
+      max-width: 600px;
+    }
+    .featured-info h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+      color: #AEC37D;
+      text-shadow: 0 0 8px #78995A;
+    }
+    .featured-info p {
+      font-size: 1.25rem;
+      line-height: 1.5;
+      max-height: 90px;
+      overflow: hidden;
+      text-shadow: 0 0 5px #567240;
+      color: #C3D3A8;
+      margin-bottom: 20px;
+    }
+    .featured-buttons {
+      display: flex;
+      gap: 16px;
+      user-select: none;
+    }
+    .btn-play {
+      background: #AEC37D;
+      color: #3E2F1C;
+      padding: 14px 36px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.3s ease;
+      user-select: none;
+      box-shadow: 0 0 12px #78995A;
+      border: none;
+    }
+    .btn-play:hover {
+      background: #D1E1A9;
+    }
+    .btn-info {
+      background: rgba(166, 196, 138, 0.4);
+      border: 2px solid #AEC37D;
+      color: #AEC37D;
+      padding: 14px 36px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.3s ease;
+      user-select: none;
+      border: none;
+    }
+    .btn-info:hover {
+      background: rgba(166, 196, 138, 0.6);
+    }
+    .material-icons {
+      font-size: 1.6rem;
+      user-select: none;
+    }
+
+    /* Category Rows */
+    .category-row {
+      margin-bottom: 40px;
+      user-select: none;
+    }
+
+    .category-row h2 {
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #AEC37D;
+      padding-left: 8px;
+      margin-bottom: 16px;
+      text-shadow: 0 0 3px #567240;
+      user-select: text;
+    }
+
+    .row-movies {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-padding-inline: 60px;
+      scrollbar-width: thin;
+      padding-bottom: 8px;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .row-movies::-webkit-scrollbar {
+      height: 8px;
+    }
+    .row-movies::-webkit-scrollbar-track {
+      background: #2E2415;
+    }
+    .row-movies::-webkit-scrollbar-thumb {
+      background: #78995A;
+      border-radius: 4px;
+    }
+
+    /* Movies in horizontal row */
+    .movie-card {
+      min-width: 150px;
+      max-width: 150px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      box-shadow: 0 4px 10px rgb(0 0 0 / 0.7);
+    }
+    .movie-card img {
+      width: 100%;
+      height: 225px;
+      object-fit: cover;
+      display: block;
+      border-radius: 12px;
+      transition: transform 0.3s ease;
+      user-select: none;
+      pointer-events: none;
+    }
+    .movie-card:hover,
+    .movie-card:focus {
+      transform: scale(1.12);
+      z-index: 20;
+    }
+    .movie-card:hover img,
+    .movie-card:focus img {
+      transform: scale(1.15);
+    }
+
+    /* Overlay with play icon on hover/focus */
+    .movie-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(122, 151, 73, 0.7) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 12px;
+      pointer-events: none;
+    }
+    .movie-card:hover::after,
+    .movie-card:focus::after {
+      opacity: 1;
+    }
+    .movie-card .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #D6E6C3;
+      font-size: 3rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      user-select: none;
+    }
+    .movie-card:hover .play-icon,
+    .movie-card:focus .play-icon {
+      opacity: 1;
+    }
+
+    /* Movie title below card */
+    .movie-title {
+      text-align: center;
+      margin-top: 6px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #B9CCA1;
+      user-select: text;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 150px;
+      cursor: default;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      header {
+        padding: 1rem 2rem;
+      }
+      .header-controls input[type="search"] {
+        width: 180px;
+      }
+      main {
+        padding: 0 2rem 2rem;
+        margin-top: 12px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+      }
+      .header-controls input[type="search"] {
+        width: 100%;
+        max-width: 300px;
+      }
+      main {
+        padding: 0 1rem 1rem;
+        margin-top: 12px;
+      }
+      .category-row h2 {
+        font-size: 1.4rem;
+      }
+      .movie-card, .movie-title {
+        min-width: 120px;
+        max-width: 120px;
+      }
+      .movie-card img {
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header role="banner" aria-label="Cabeçalho Ganazza Flix">
+    <div class="logo" aria-label="Logotipo Ganazza Flix">Ganazza Flix</div>
+    <div class="header-controls">
+      <input
+        type="search"
+        id="searchInput"
+        aria-label="Pesquisar filmes"
+        placeholder="Pesquisar filmes..."
+        autocomplete="off"
+      />
+      <button
+        class="icon-button"
+        aria-label="Notificações"
+        data-badge="5"
+        title="Notificações"
+      >
+        <span class="material-icons">notifications</span>
+      </button>
+      <button class="icon-button" aria-label="Perfil do usuário" title="Perfil">
+        <span class="material-icons">account_circle</span>
+      </button>
+    </div>
+  </header>
+
+  <main role="main" aria-label="Conteúdo principal">
+    <section class="featured-hero" aria-label="Filme em destaque" tabindex="0">
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f5e24225-1d68-46ac-9aa2-ee023e2fabeb.png" alt="Poster de filme em destaque com design marrom e verde" />
+      <div class="featured-info">
+        <h1 id="featuredTitle">Filme Incrível</h1>
+        <p id="featuredDescription">Uma trama envolvente e emocionante, perfeita para uma maratona inesquecível.</p>
+        <div class="featured-buttons">
+          <button class="btn-play" aria-label="Assistir filme">
+            <span class="material-icons">play_arrow</span> Assistir
+          </button>
+          <button class="btn-info" aria-label="Mais informações">
+            <span class="material-icons">info_outline</span> Mais info
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div id="categoriesContainer" aria-live="polite"></div>
+  </main>
+
+  <footer role="contentinfo" style="text-align:center; padding:16px; color:#AEC37D; user-select:none;">
+    &copy; 2024 Ganazza Flix. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    // Large dummy data for multiple categories, with real styled placeholders to simulate real movie posters
+    const movies = [
+      {id:1,title:"O Grande Mistério",genres:["Suspense","Mistério"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/10b727cf-8df3-4849-b320-378a71958f6d.png",description:"Um suspense que prende do começo ao fim."},
+      {id:2,title:"Noite Sombria",genres:["Suspense","Terror"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/81931b8a-be45-4ebf-a590-bba95a0595f2.png",description:"Prepare-se para uma noite cheia de arrepios."},
+      {id:3,title:"Comédia do Bairro",genres:["Comédia"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f93f1614-e334-44e1-880b-1217f76d6be4.png",description:"Ria muito com essa comédia leve e divertida."},
+      {id:4,title:"Risadas Garantidas",genres:["Comédia","Família"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/05aebe15-3153-45fb-a666-44ba57340120.png",description:"Diversão para toda a família."},
+      {id:5,title:"Romance na Praia",genres:["Romance","Drama"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fab9dc87-a64e-4140-a9eb-e86a9f88426f.png",description:"Uma história de amor que aquece o coração."},
+      {id:6,title:"Amor e Destino",genres:["Romance"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d9b19a22-6706-4cd4-aeee-5dfe26478b9e.png",description:"O destino une dois corações."},
+      {id:7,title:"Aventuras no Espaço",genres:["Ficção","Ação"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d81ddd07-d262-4505-8da2-1fd7d57e91ee.png",description:"Viagem fantástica com efeitos incríveis e muita ação."},
+      {id:8,title:"Caçadores de Estrelas",genres:["Ficção","Drama"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b8d8f2cd-1b02-441b-887d-a64b7390d5e5.png",description:"Uma jornada pelo cosmos."},
+      {id:9,title:"Histórias do Passado",genres:["Documentário"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/585c26bf-d5bb-4ad3-84fa-975bc9a1f7de.png",description:"Relatos emocionantes e reais."},
+      {id:10,title:"Planeta Terra",genres:["Documentário","Natureza"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d191e518-c256-42bd-9dfc-e08ace59aec3.png",description:"Belezas e mistérios do nosso planeta."},
+      {id:11,title:"Cidade Oculta",genres:["Suspense","Mistério"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0d87f31d-d6c0-4532-b26b-0f4e673a082a.png",description:"Segredos que ninguém imaginava."},
+      {id:12,title:"Vidas Cruzadas",genres:["Drama","Romance"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/db613de0-78c8-4e87-9d03-3c2cc28fc45d.png",description:"Histórias entrelaçadas com emoção."},
+      {id:13,title:"Festa no Campo",genres:["Comédia","Família"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/66fe63f5-62f0-4d2d-8485-5b6cad3defe3.png",description:"Alegria e diversão garantidas."},
+      {id:14,title:"Resgate Intergaláctico",genres:["Ficção","Ação"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/76184489-9b6a-4cc2-9c82-926de7a6a099.png",description:"Uma missão além das estrelas."},
+      {id:15,title:"Vozes da Natureza",genres:["Documentário","Natureza"],image:"https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5b158ff6-f616-4d88-b951-8d78bb4fe5d2.png",description:"O som que cura a alma."}
+    ];
+
+    // Derive unique categories
+    const allGenresSet = new Set();
+    movies.forEach(m => m.genres.forEach(g => allGenresSet.add(g)));
+    const allGenres = Array.from(allGenresSet);
+
+    const categoriesContainer = document.getElementById('categoriesContainer');
+    const featuredTitle = document.getElementById('featuredTitle');
+    const featuredDescription = document.getElementById('featuredDescription');
+    const featuredPoster = document.querySelector('.featured-hero > img');
+
+    // Group movies by genre for rows
+    function groupByGenre() {
+      const grouped = {};
+      allGenres.forEach(genre => {
+        grouped[genre] = movies.filter(m => m.genres.includes(genre));
+      });
+      return grouped;
+    }
+
+    // Set featured hero's content
+    function setFeatured(movie) {
+      featuredTitle.textContent = movie.title;
+      featuredDescription.textContent = movie.description;
+      featuredPoster.src = movie.image;
+      featuredPoster.alt = 'Poster do filme ' + movie.title;
+    }
+
+    // Create a movie card element
+    function createMovieCard(movie) {
+      const card = document.createElement('article');
+      card.className = 'movie-card';
+      card.tabIndex = 0;
+      card.setAttribute('aria-label', 'Filme ' + movie.title);
+
+      const img = document.createElement('img');
+      img.src = movie.image;
+      img.alt = 'Poster do filme ' + movie.title;
+      img.loading = 'lazy';
+
+      const playIcon = document.createElement('span');
+      playIcon.className = 'material-icons play-icon';
+      playIcon.setAttribute('aria-hidden', 'true');
+      playIcon.innerText = 'play_circle_filled';
+
+      card.appendChild(img);
+      card.appendChild(playIcon);
+
+      const title = document.createElement('div');
+      title.className = 'movie-title';
+      title.textContent = movie.title;
+      card.appendChild(title);
+
+      // Click and keyboard Enter to set featured
+      card.addEventListener('click', () => setFeatured(movie));
+      card.addEventListener('keypress', e => {
+        if (e.key === 'Enter') setFeatured(movie);
+      });
+
+      return card;
+    }
+
+    // Render all rows with category name and movies horizontally scrollable
+    function renderRows() {
+      categoriesContainer.innerHTML = '';
+      const grouped = groupByGenre();
+
+      // For Netflix style, also add a "Popular" row with top movies (use first 10)
+      const popularMovies = movies.slice(0,10);
+      categoriesContainer.appendChild(createCategoryRow('Populares', popularMovies));
+
+      Object.keys(grouped).forEach(genre => {
+        categoriesContainer.appendChild(createCategoryRow(genre, grouped[genre]));
+      });
+    }
+
+    // Create category row container with horizontal scroll movies
+    function createCategoryRow(name, moviesInRow) {
+      const section = document.createElement('section');
+      section.className = 'category-row';
+      section.setAttribute('aria-label', 'Categoria ' + name);
+
+      const heading = document.createElement('h2');
+      heading.textContent = name;
+      section.appendChild(heading);
+
+      const movieRow = document.createElement('div');
+      movieRow.className = 'row-movies';
+
+      moviesInRow.forEach(movie => {
+        movieRow.appendChild(createMovieCard(movie));
+      });
+
+      section.appendChild(movieRow);
+      return section;
+    }
+
+    // Search filter on all movies, filtering all rows's movies
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', e => {
+      const term = e.target.value.trim().toLowerCase();
+      // Filter all movie cards showing only those matching search term
+      const cards = document.querySelectorAll('.movie-card');
+      cards.forEach(card => {
+        const title = card.querySelector('.movie-title').textContent.toLowerCase();
+        if (title.includes(term)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      // If no movies visible, show message under each category? For cleanliness, skip
+    });
+
+    // Initial setup: Show first movie in featured hero
+    window.addEventListener('DOMContentLoaded', () => {
+      renderRows();
+      if(movies.length > 0) {
+        setFeatured(movies[0]);
+      }
+    });
+  </script>
+</body>
+</html>
+
